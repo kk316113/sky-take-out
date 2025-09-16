@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.beans.Beans;
 import java.util.List;
 import java.util.Objects;
 
@@ -123,5 +124,28 @@ public class DishServiceImpl implements DishService {
             });
             dishFlavorMapper.insertBatch(flavors);
         }
+    }
+    /**
+     * 起售停售菜品
+     *
+     * @param status
+     * @param id
+     */
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        Dish dish = Dish.builder()
+                .status(status)
+                .id(id)
+                .build();
+        dishMapper.update(dish);
+    }
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     * @return
+     */
+    @Override
+    public List<DishVO> list(Long categoryId) {
+        return dishMapper.list(categoryId);
     }
 }
